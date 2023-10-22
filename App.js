@@ -54,21 +54,34 @@ export default function App() {
           tabBarStyle: { height: ScreenHeight * 0.085 },
           headerTransparent: true,
           headerTitle: "",
+          tabBarHideOnKeyboard: true,
+          tabBarShowLabel: false,
         }}>
         <Tab.Screen
-          name='HomePage'
+          name='Home'
           component={HomePage}
           options={({ route }) => ({
-            tabBarIcon: (tabInfo) => {
-              return <HomeTabIcon />;
+            tabBarIcon: ({ focused, color, size }) => {
+              if (route?.name === "Home") {
+                return focused ? (
+                  <View className='flex flex-row items-center bg-slate-200 rounded-full w-20 ml-6'>
+                    <HomeTabIcon />
+                    <Text className='font-semibold px-1'>
+                      {route.name}
+                    </Text>
+                  </View>
+                ) : (
+                  <HomeTabIcon />
+                );
+              }
             },
             headerTransparent: true,
             headerTitle: "",
             headerShown: false,
-            // tabBarStyle:{
-            //   display: !isDrawerOpened? 'flex':'none',
-
-            // }
+            tabBarStyle: {
+              display: !isDrawerOpened ? "flex" : "none",
+              height: 71,
+            },
           })}
           // initialParams={{handleOpenedDrawer}}
         />
@@ -88,22 +101,58 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name='Frame14'
+          name='Notify'
           component={Frame14}
-          options={{
-            tabBarIcon: (tabInfo) => {
-              return <NotificationTabIcon width={20} height={30} />;
+          options={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              if (route?.name === "Notify") {
+                return focused ? (
+                  <View className='flex flex-row items-center bg-slate-200 rounded-full w-20 mx-5 p-1'>
+                    <NotificationTabIcon width={30} height={25} />
+                    <Text className='font-semibold px-'>
+                      {route.name}
+                    </Text>
+                  </View>
+                ) : (
+                  <NotificationTabIcon width={30} height={25} />
+                );
+              }
             },
-          }}
+            headerTransparent: true,
+            headerTitle: "",
+            headerShown: false,
+            tabBarStyle: {
+              display: !isDrawerOpened ? "flex" : "none",
+              height: 71,
+            },
+          })}
         />
         <Tab.Screen
-          name='Frame17'
+          name='Profile'
           component={Frame17}
-          options={{
-            tabBarIcon: (tabInfo) => {
-              return <ProfileTabIcon width={20} height={30} />;
+          options={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              if (route?.name === "Profile") {
+                return focused ? (
+                  <View className='flex flex-row items-center bg-slate-200 rounded-full w-20 mx-5 p-1'>
+                    <ProfileTabIcon width={30} height={25} />
+                    <Text className='font-semibold px-'>
+                      {route.name}
+                    </Text>
+                  </View>
+                ) : (
+                  <ProfileTabIcon width={20} height={30} />
+                );
+              }
             },
-          }}
+            headerTransparent: true,
+            headerTitle: "",
+            headerShown: false,
+            tabBarStyle: {
+              display: !isDrawerOpened ? "flex" : "none",
+              height: 71,
+            },
+          })}
         />
       </Tab.Navigator>
     </NavigationContainer>

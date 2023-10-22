@@ -21,6 +21,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {newArrivals,popular,discountSection} from '../../components/Images'
+import Bags from "../../components/Bags";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -174,6 +175,7 @@ const Frame13 = () => {
             );
           })}
         </View>
+        <View className="px-6"><Bags/></View>
       </ScrollView>
     </SafeAreaView>
   );

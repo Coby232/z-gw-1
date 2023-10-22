@@ -104,7 +104,7 @@ const Cart = () => {
   const calcTotal = (sign) => {
     let sum = 0;
       for (let item in popular) {
-        const cost = Number(popular[item].price);
+        const cost = parseFloat(popular[item].price);
         (count[item]!== 0)? (sum += count[item] * cost): ""; 
       }
       setTotalCost(sum);
