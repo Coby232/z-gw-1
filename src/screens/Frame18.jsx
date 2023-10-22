@@ -64,14 +64,13 @@ const Frame18 = () => {
 
 const Cart = () => {
   const [count, setCount] = useState(
-    new Array(popular.length).fill(0)
+    new Array(popular.length).fill(1)
   );
   const [totalCost, setTotalCost] = useState(0);
-
   const [deleteItem, setDeleteItem] = useState(
     new Array(popular.length).fill(false)
   );
-
+  const [numItems,setNumItems] = useState(0);
   const handleDetele = (itemIndex) => {
     setDeleteItem((prevItems) => {
       const temp = [...prevItems];
@@ -85,6 +84,7 @@ const Cart = () => {
       const newCounts = [...prevCounts];
       newCounts[itemIndex] += 1;
       calcTotal();
+      handleNumItems();
       return newCounts;
     });
   };
@@ -92,37 +92,46 @@ const Cart = () => {
   const handleSubtract = (itemIndex) => {
     setCount((prevCounts) => {
       const newCounts = [...prevCounts];
-      if (newCounts[itemIndex] >= 0) {
-        calcTotal();
-         if (newCounts[itemIndex] > 0){
-            newCounts[itemIndex] -= 1;
-         }
+      if (newCounts[itemIndex] > 0) {
+        newCounts[itemIndex] -= 1;
       }
-      
+      calcTotal();
+      handleNumItems();
       return newCounts;
     });
   };
 
-  const calcTotal = () => {
-    let sum = 0
+  const calcTotal = (sign) => {
+    let sum = 0;
       for (let item in popular) {
         const cost = Number(popular[item].price);
-        sum += count[item] * cost;
+        (count[item]!== 0)? (sum += count[item] * cost): ""; 
       }
-      setTotalCost(sum)
+      setTotalCost(sum);
   };
-
+  const handleNumItems =()=>{
+     setNumItems(() => {
+      const result = count.reduce(
+        (sum, current) => sum + current,
+        0
+      );
+      return result;
+     });
+  }
+  useEffect(()=>{
+    calcTotal()
+    handleNumItems()
+  })
   return (
     <ScrollView className='' horizontal={false}>
       <Text className='py-2 px-6 text-lg font-bold'>My Cart</Text>
       <View className=' flex flex-col w-full px-5'>
         {popular.map((item, index) => {
           return (
-            <View className='shadow-2xl p-2 w-full'>
+            <View className='shadow-2xl p-2 w-full' key={index}>
               <ImageBackground
                 source={item.src}
                 resizeMode={`${item.id !== 2 ? "cover" : "center"}`}
-                key={item.id}
                 imageStyle={{ borderRadius: 20 }}
                 className={`h-36 ${
                   deleteItem[index] ? "hidden" : ""
@@ -147,8 +156,7 @@ const Cart = () => {
                         -
                       </Text>
                       <Text
-                        className='font-semibold text-xl'
-                        key={index}>
+                        className='font-semibold text-xl'>
                         {count[item.id - 1]}
                       </Text>
                       <Text
@@ -171,7 +179,9 @@ const Cart = () => {
                   <Text className='font-bold text-lg'>
                     {item.name}
                   </Text>
-                  <Text className='text-md text-slate-500'>{item.detail}</Text>
+                  <Text className='text-md text-slate-500'>
+                    {item.detail}
+                  </Text>
                 </View>
                 <Text className='font-bold text-lg'>
                   ${item.price}
@@ -181,8 +191,12 @@ const Cart = () => {
                 className={`pt-3 flex flex-row justify-between ${
                   item.id !== count.length ? "hidden" : ""
                 } `}>
-                <Text className="text-lg text-slate-500">Total({item.id} items):</Text>
-                <Text className="text-lg text-slate-500">${totalCost}</Text>
+                <Text className='text-lg text-slate-500'>
+                  Total({numItems} items):
+                </Text>
+                <Text className='text-lg text-slate-500'>
+                  ${totalCost}
+                </Text>
               </View>
             </View>
           );
