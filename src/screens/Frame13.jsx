@@ -26,7 +26,7 @@ import Bags from "../../components/Bags";
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-export default function HomePage({ route }) {
+export default function Home({ route }) {
   // const { handleOpenedDrawer } = route.params;
   return (
     <SafeAreaView className="flex-1 ">
