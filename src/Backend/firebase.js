@@ -9,7 +9,6 @@ import { initializeApp } from "firebase/app";
 
 // Export auth
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyDe7VB0-WkFEFMgx-_H0Mw195aE2rNI4mE",
   authDomain: "e-commerce-app-75748.firebaseapp.com",

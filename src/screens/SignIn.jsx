@@ -15,12 +15,15 @@ import { auth } from "../Backend/firebase";
 import { useState, useEffect } from "react";
 import HomePage from "./HomePage";
 import { useNavigation } from "@react-navigation/native";
+import firebase from "firebase/app";
 // import { TextInput } from "react-native-gesture-handler";
 
 const SignIn = ({ navigate }) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [initializing, setIntializing] = useState(true);
+  const [user, setUset] = useState();
 
   const handleAuthentication = async () => {
     if (email.trim() === "" || password.trim() === "") {
@@ -33,45 +36,49 @@ const SignIn = ({ navigate }) => {
     }
 
     try {
-        // Try to sign in the user with email and password
-        await signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log("Signed in with:", user.email);
-            // Navigate to the HomePage
-            navigation.navigate("HomePage");
-          })
-          .catch(async (error) => {
-            // If sign in fails, try to create a new user with email and password
-            if ((error.code === "auth/wrong-password") ) {
-              Alert.alert("Error", "Wrong password. Please try again.");
-            } else if (
-              (error.code === "auth/user-not-found") ||
-              (error.code === "auth/invalid-login-credentials")
-            ) {
-              try {
-                const userCredentials =
-                  await createUserWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                  );
-                const user = userCredentials.user;
-                console.log("Registered with:", user.email);
-
-                // Navigate to the HomePage
-                navigation.navigate("HomePage");
-              } catch (error) {
-                console.error(error);
-              }
-            } else {
-              console.error(error);
+      // Try to sign in the user with email and password
+      await signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log("Signed in with:", user.email);
+          // Navigate to the HomePage
+          navigation.navigate("HomePage");
+        })
+        .catch(async (error) => {
+          // If sign in fails, try to create a new user with email and password
+          if (error.code === "auth/wrong-password") {
+            Alert.alert("Error", "Wrong password. Please try again.");
+          }
+          if (
+            (error.code === "auth/user-not-found" ||
+              error.code === "auth/invalid-login-credentials") &&
+            !(error.code === "auth/email-already-in-use")
+          ) {
+            try {
+              const userCredentials =
+                await createUserWithEmailAndPassword(
+                  auth,
+                  email,
+                  password
+                );
+              const user = userCredentials.user;
+              console.log("Registered with:", user.email);
+              // Navigate to the HomePage
+              navigation.navigate("HomePage");
+            } catch (error) {
+              Alert.alert(
+                "Error",
+                "Wrong password. Please try again."
+              );
             }
-          });
-      } catch (error) {
-        console.error(error);
-      }
+          } else {
+            console.log(error)
+          }
+        });
+    } catch (error) {
+      // console.error(error);
+    }
   };
 
   return (
