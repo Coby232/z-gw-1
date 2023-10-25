@@ -11,19 +11,33 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../Backend/firebase";
+import {
+  auth,
+  onAuthStateChanged,
+  signOut,
+} from "../Backend/firebase";
 import { useState, useEffect } from "react";
 import HomePage from "./HomePage";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "firebase/app";
 // import { TextInput } from "react-native-gesture-handler";
 
+
 const SignIn = ({ navigate }) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [initializing, setIntializing] = useState(true);
-  const [user, setUset] = useState();
+  const [user, setUser] = useState(null);
+
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     console.log("USER IS STILL LOGGED IN: ", user);
+  //     if (user) {
+  //       setUser(user);
+  //     }
+  //   });
+  // }, [user]);
 
   const handleAuthentication = async () => {
     if (email.trim() === "" || password.trim() === "") {
@@ -80,6 +94,17 @@ const SignIn = ({ navigate }) => {
       // console.error(error);
     }
   };
+
+   const handleLogout = () => {
+     signOut(auth)
+       .then(() => {
+         console.log("User logged out successfully:");
+         setUser(null);
+       })
+       .catch((error) => {
+         console.log("Error", error);
+       });
+   };
 
   return (
     <View className='bg-white h-screen flex flex-row justify-center items-center'>

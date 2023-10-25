@@ -1,9 +1,10 @@
-import {
-  getAuth,
-  RecaptchaVerifier,
-  getReactNativePersistence,
-} from "firebase/auth";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initializeApp } from "firebase/app";
+import {
+  getReactNativePersistence,
+  initializeAuth,
+} from "firebase/auth";
 
 // Get the Firebase auth instance
 
@@ -22,8 +23,15 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
+// const auth = initializeAuth(app, {
+//   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+// });
 
 // Get the Firebase auth instance
-const auth = getAuth(app);
+// const auth = getAuth(app);
+// Configure persistence to use AsyncStorage
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
 // Export auth
 export { auth };
