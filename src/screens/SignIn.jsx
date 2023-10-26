@@ -4,6 +4,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Image,
   Alert,
 } from "react-native";
 import React from "react";
@@ -11,11 +12,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../Backend/firebase";
-import { useState, useEffect } from "react";
+import { auth, signOut } from "../Backend/firebase";
+import { useState, useEffect, useRef } from "react";
 import HomePage from "./HomePage";
 import { useNavigation } from "@react-navigation/native";
-import firebase from "firebase/app";
 // import { TextInput } from "react-native-gesture-handler";
 
 const SignIn = ({ navigate }) => {
@@ -23,7 +23,7 @@ const SignIn = ({ navigate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [initializing, setIntializing] = useState(true);
-  const [user, setUset] = useState();
+  const [user, setUser] = useState(null);
 
   const handleAuthentication = async () => {
     if (email.trim() === "" || password.trim() === "") {
@@ -73,7 +73,7 @@ const SignIn = ({ navigate }) => {
               );
             }
           } else {
-            console.log(error)
+            console.log(error);
           }
         });
     } catch (error) {
@@ -81,9 +81,23 @@ const SignIn = ({ navigate }) => {
     }
   };
 
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("User logged out successfully:");
+        setUser(null);
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+  };
+
   return (
-    <View className='bg-white h-screen flex flex-row justify-center items-center'>
+    <View className='bg-white h-screen flex flex-col items-center'>
+        <Image source={require('../../assets/motto.png')} className="w-36 h-36" resizeMode="contain"/>
       <View className='flex flex-col gap-2'>
+        <Text>Welcome!</Text>
+        <Text>Please login or sign up to continue our app</Text>
         <TextInput
           placeholder='Enter your email'
           className='h-10 min-w-max border-2 p-2'
@@ -102,11 +116,11 @@ const SignIn = ({ navigate }) => {
           secureTextEntry={true}
         />
         <TouchableOpacity
-          className='bg-black flex flex-row justify-center items-center p-2'
+          className='bg-black flex flex-row justify-center items-center p-2 rounded-full'
           onPress={() => {
             handleAuthentication();
           }}>
-          <Text className='text-white'>Sign In</Text>
+          <Text className='text-white'>Login</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -114,3 +128,12 @@ const SignIn = ({ navigate }) => {
 };
 
 export default SignIn;
+
+// useEffect(() => {
+//   onAuthStateChanged(auth, (user) => {
+//     console.log("USER IS STILL LOGGED IN: ", user);
+//     if (user) {
+//       setUser(user);
+//     }
+//   });
+// }, [user]);
