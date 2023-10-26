@@ -4,6 +4,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Image,
   Alert,
 } from "react-native";
 import React from "react";
@@ -11,11 +12,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import {
-  auth,
-  onAuthStateChanged,
-  signOut,
-} from "../Backend/firebase";
+import { auth, signOut } from "../Backend/firebase";
 import { useState, useEffect, useRef } from "react";
 import HomePage from "./HomePage";
 import { useNavigation } from "@react-navigation/native";
@@ -96,8 +93,11 @@ const SignIn = ({ navigate }) => {
   };
 
   return (
-    <View className='bg-white h-screen flex flex-row justify-center items-center'>
+    <View className='bg-white h-screen flex flex-col items-center'>
+        <Image source={require('../../assets/motto.png')} className="w-36 h-36" resizeMode="contain"/>
       <View className='flex flex-col gap-2'>
+        <Text>Welcome!</Text>
+        <Text>Please login or sign up to continue our app</Text>
         <TextInput
           placeholder='Enter your email'
           className='h-10 min-w-max border-2 p-2'
@@ -116,11 +116,11 @@ const SignIn = ({ navigate }) => {
           secureTextEntry={true}
         />
         <TouchableOpacity
-          className='bg-black flex flex-row justify-center items-center p-2'
+          className='bg-black flex flex-row justify-center items-center p-2 rounded-full'
           onPress={() => {
             handleAuthentication();
           }}>
-          <Text className='text-white'>Sign In</Text>
+          <Text className='text-white'>Login</Text>
         </TouchableOpacity>
       </View>
     </View>
