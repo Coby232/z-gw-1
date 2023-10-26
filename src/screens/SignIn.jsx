@@ -94,7 +94,11 @@ const SignIn = ({ navigate }) => {
 
   return (
     <View className='bg-white h-screen flex flex-col items-center'>
-        <Image source={require('../../assets/motto.png')} className="w-36 h-36" resizeMode="contain"/>
+      <Image
+        source={require("../../assets/motto.png")}
+        className='w-36 h-36'
+        resizeMode='contain'
+      />
       <View className='flex flex-col gap-2'>
         <Text>Welcome!</Text>
         <Text>Please login or sign up to continue our app</Text>
@@ -115,13 +119,24 @@ const SignIn = ({ navigate }) => {
           autoComplete='current-password'
           secureTextEntry={true}
         />
-        <TouchableOpacity
-          className='bg-black flex flex-row justify-center items-center p-2 rounded-full'
-          onPress={() => {
-            handleAuthentication();
-          }}>
-          <Text className='text-white'>Login</Text>
-        </TouchableOpacity>
+        <View className='flex flex-col justify-center items-center gap-y-5'>
+          <TouchableOpacity
+            className='bg-black flex flex-row justify-center items-center p-2 rounded-full w-64'
+            onPress={() => {
+              handleAuthentication();
+            }}>
+            <Text className='text-white'>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className='bg-blue-800 flex flex-row justify-center items-center p-2 rounded-full w-64'>
+            <Text className='text-white'>Continue with Facebook</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text>Continue with Google</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text>Continue with Apple</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
