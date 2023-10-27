@@ -23,7 +23,7 @@ const SignInOrUp = () => {
       </TouchableOpacity>
       <TouchableOpacity className='border-white border-2 flex flex-row justify-center items-center p-2 rounded-full w-64'
         onPress={()=>{
-            navigation.navigate("SignUp");
+            navigation.navigate("SlideShow");
         }}
       >
         <Text className='text-white text-lg font-bold'>Sign Up</Text>
