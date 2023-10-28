@@ -6,7 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import {
   createDrawerNavigator,
   useDrawerStatus,
@@ -28,6 +28,8 @@ const Stack = createStackNavigator();
 
 export default function Home({ route }) {
   // const { handleOpenedDrawer } = route.params;
+
+  
   return (
     <SafeAreaView className="flex-1 ">
       <NavigationContainer independent={true}>

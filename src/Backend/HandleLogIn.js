@@ -3,7 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth ,db} from "./firebase";
+import { auth, db } from "./firebase";
 import { doc, setDoc } from "firebase/firestore";
 import uuid from "react-native-uuid";
 
@@ -23,6 +23,7 @@ const handleUserDetails = async (username, email, password) => {
   userInfo.createdAt = new Date();
   userInfo.modifiedAt = new Date();
 };
+// let verified = Boolean;
 
 const signUp = async (
   username,
@@ -40,17 +41,30 @@ const signUp = async (
     return;
   }
   if (password === confirmedPassword) {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      handleUserDetails(username, email, password);
-      await setDoc(doc(db, "users", userid), userInfo);
-      const user = userCredentials.user;
-      console.log("Registered with:", user.email);
-      // Navigate to the HomePage
-      navigation.navigate("HomePage");
+    const userCredentials = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    )
+      .catch(async (error) => {
+        if (
+          (error.code === "auth/user-not-found" ||
+            error.code === "auth/invalid-login-credentials") ||
+          (error.code === "auth/email-already-in-use")
+        ) {
+          Alert.alert(
+            "Account Exists",
+            "You are trying to sign up with and existing account"
+          );
+        }
+      })
+      .then(async () => {
+        handleUserDetails(username, email, password);
+        await setDoc(doc(db, "users", userid), userInfo);
+        navigation.navigate("HomePage");
+      });
+    // const user = userCredentials.user;
+    // console.log("Registered with:", user.email);
   } else {
     Alert.alert("Not working", "didnt work, still error");
   }

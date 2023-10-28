@@ -71,7 +71,7 @@ const SignUp = ({ navigate }) => {
             onPress={() => {
               signUp(username,email, password,confirmPassword, navigation);
             }}>
-            <Text className='text-white'>Login</Text>
+            <Text className='text-white'>Sign up and login</Text>
           </TouchableOpacity>
         </View>
       </View>

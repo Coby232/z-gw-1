@@ -26,7 +26,7 @@ import ProceedIcon from "../../assets/Icons/proceedArrow.svg";
 
 const Stack = createStackNavigator();
 
-const CartSection = () => {
+const Checkout = () => {
   const navigation = useNavigation();
   return (
     <SafeAreaView className='flex-1'>
@@ -55,7 +55,7 @@ const CartSection = () => {
               );
             },
           }}>
-          <Stack.Screen name='CartSection' component={CartSection} />
+          <Stack.Screen name='Cart' component={Cart} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
@@ -212,4 +212,4 @@ const Cart = () => {
   );
 };
 
-export default CartSection;
+export default Checkout;
