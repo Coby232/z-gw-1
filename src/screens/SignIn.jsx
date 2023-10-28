@@ -8,7 +8,7 @@ import {
   Alert,
 } from "react-native";
 import React from "react";
-import { handleAuthentication } from "../Backend/HandleLogIn";
+import { signIn } from "../Backend/HandleLogIn";
 import { useState, useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 // import { TextInput } from "react-native-gesture-handler";
@@ -51,7 +51,7 @@ const SignIn = ({ navigate }) => {
           <TouchableOpacity
             className='bg-black flex flex-row justify-center items-center p-2 rounded-full w-64'
             onPress={() => {
-              handleAuthentication(email,password,navigation);
+              signIn(email,password,navigation);
             }}>
             <Text className='text-white'>Login</Text>
           </TouchableOpacity>

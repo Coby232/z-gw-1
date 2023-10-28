@@ -15,9 +15,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./Frame13";
 import Frame14 from "./Frame14";
 import Frame17 from "./Frame17";
-import Frame18 from "./Frame18";
+import CartSection from "./CartSection";
 import HomeTabIcon from "../../assets/Icons/tabIcons/home.svg";
-import CartTabIcon from "../../assets/Icons/tabIcons/cart.svg";
+import CartSectionTabIcon from "../../assets/Icons/tabIcons/cart.svg";
 import NotificationTabIcon from "../../assets/Icons/tabIcons/notification.svg";
 import ProfileTabIcon from "../../assets/Icons/tabIcons/profile.svg";
 import { useState, useEffect } from "react";
@@ -77,11 +77,11 @@ export default function HomePage() {
           // initialParams={{handleOpenedDrawer}}
         />
         <Tab.Screen
-          name='Frame18'
-          component={Frame18}
+          name='CartSection'
+          component={CartSection}
           options={{
             tabBarIcon: (tabInfo) => {
-              return <CartTabIcon width={30} height={30} />;
+              return <CartSectionTabIcon width={30} height={30} />;
             },
             tabBarStyle: {
               display: "none",

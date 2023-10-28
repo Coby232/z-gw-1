@@ -3,10 +3,34 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "./firebase";
-import { useNavigation } from "@react-navigation/native";
+import { auth ,db} from "./firebase";
+import { doc, setDoc } from "firebase/firestore";
+import uuid from "react-native-uuid";
 
-const handleAuthentication = async (email,password,navigation) => {
+const userid = uuid.v4();
+const userInfo = {
+  username: "username",
+  email: "email",
+  password: "password",
+  createdAt: new Date(),
+  modifiedAt: new Date(),
+};
+
+const handleUserDetails = async (username, email, password) => {
+  userInfo.username = username;
+  userInfo.email = email;
+  userInfo.password = password;
+  userInfo.createdAt = new Date();
+  userInfo.modifiedAt = new Date();
+};
+
+const signUp = async (
+  username,
+  email,
+  password,
+  confirmedPassword,
+  navigation
+) => {
   if (email.trim() === "" || password.trim() === "") {
     Alert.alert("Please enter email and password");
     return;
@@ -15,9 +39,34 @@ const handleAuthentication = async (email,password,navigation) => {
     Alert.alert("Password should be at least 6 characters");
     return;
   }
+  if (password === confirmedPassword) {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      handleUserDetails(username, email, password);
+      await setDoc(doc(db, "users", userid), userInfo);
+      const user = userCredentials.user;
+      console.log("Registered with:", user.email);
+      // Navigate to the HomePage
+      navigation.navigate("HomePage");
+  } else {
+    Alert.alert("Not working", "didnt work, still error");
+  }
+};
 
+// Sign in with email and password
+const signIn = async (email, password, navigation) => {
+  if (email.trim() === "" || password.trim() === "") {
+    Alert.alert("Please enter email and password");
+    return;
+  }
+  if (password.length < 6) {
+    Alert.alert("Password should be at least 6 characters");
+    return;
+  }
   try {
-    // Try to sign in the user with email and password
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
@@ -27,36 +76,11 @@ const handleAuthentication = async (email,password,navigation) => {
         navigation.navigate("HomePage");
       })
       .catch(async (error) => {
-        // If sign in fails, try to create a new user with email and password
-        if (error.code === "auth/wrong-password") {
-          Alert.alert("Error", "Wrong password. Please try again.");
-        }
-        if (
-          (error.code === "auth/user-not-found" ||
-            error.code === "auth/invalid-login-credentials") &&
-          !(error.code === "auth/email-already-in-use")
-        ) {
-          try {
-            const userCredentials =
-              await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-              );
-            const user = userCredentials.user;
-            console.log("Registered with:", user.email);
-            // Navigate to the HomePage
-            navigation.navigate("HomePage");
-          } catch (error) {
-            Alert.alert("Error", "Wrong password. Please try again.");
-          }
-        } else {
-          console.log(error);
-        }
+        Alert.alert("Error", "Invalid Password");
       });
   } catch (error) {
-    // console.error(error);
+    console.error("Error signing in:", error);
   }
 };
 
-export {handleAuthentication}
+export { signUp, signIn };
