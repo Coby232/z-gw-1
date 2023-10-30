@@ -71,7 +71,7 @@ export default function HomePage() {
             headerTitle: "",
             headerShown: false,
             tabBarStyle: {
-              display: "none",
+              // display: "none",
               height: 71,
             },
           })}

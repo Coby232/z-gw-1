@@ -20,8 +20,16 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {newArrivals,popular,discountSection} from '../../components/Images'
+import {
+  newArrivals,
+  popular,
+  discountSection,
+} from "../../components/Images";
 import Bags from "../../components/Bags";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -29,13 +37,26 @@ const Stack = createStackNavigator();
 export default function Home({ route }) {
   // const { handleOpenedDrawer } = route.params;
 
-  
+  // ref
+  const bottomSheetModalRef = useRef < BottomSheetModal > null;
+
+  // variables
+  const snapPoints = useMemo(() => ["25%", "50%"], []);
+
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index) => {
+    console.log("handleSheetChanges", index);
+  }, []);
+
   return (
-    <SafeAreaView className="flex-1 ">
-      <NavigationContainer independent={true}>
-        <DrawerNavigator />
-      </NavigationContainer>
-   </SafeAreaView>
+    <SafeAreaView className='flex-1 '>
+        <NavigationContainer independent={true}>
+          <DrawerNavigator/>
+        </NavigationContainer>
+    </SafeAreaView>
   );
 }
 
@@ -63,7 +84,7 @@ const DrawerNavigator = ({ handleOpenedDrawer }) => {
                   //   handleOpenedDrawer(true);
                   // }
                 }}>
-                <DrawerIcon  />
+                <DrawerIcon />
               </TouchableOpacity>
             );
           },
@@ -177,7 +198,9 @@ const Frame13 = () => {
             );
           })}
         </View>
-        <View className="px-6"><Bags/></View>
+        <View className='px-6'>
+          <Bags />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
