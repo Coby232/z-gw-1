@@ -26,7 +26,7 @@ import ProceedIcon from "../../assets/Icons/proceedArrow.svg";
 
 const Stack = createStackNavigator();
 
-const Frame18 = () => {
+const Checkout = () => {
   const navigation = useNavigation();
   return (
     <SafeAreaView className='flex-1'>
@@ -55,7 +55,7 @@ const Frame18 = () => {
               );
             },
           }}>
-          <Stack.Screen name='cart' component={Cart} />
+          <Stack.Screen name='Cart' component={Cart} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
@@ -70,7 +70,7 @@ const Cart = () => {
   const [deleteItem, setDeleteItem] = useState(
     new Array(popular.length).fill(false)
   );
-  const [numItems,setNumItems] = useState(0);
+  const [numItems, setNumItems] = useState(0);
   const handleDetele = (itemIndex) => {
     setDeleteItem((prevItems) => {
       const temp = [...prevItems];
@@ -103,28 +103,27 @@ const Cart = () => {
 
   const calcTotal = (sign) => {
     let sum = 0;
-      for (let item in popular) {
-        const cost = parseFloat(popular[item].price);
-        (count[item]!== 0)? (sum += count[item] * cost): ""; 
-      }
-      setTotalCost(sum);
+    for (let item in popular) {
+      const cost = parseFloat(popular[item].price);
+      count[item] !== 0 ? (sum += count[item] * cost) : "";
+    }
+    setTotalCost(sum);
   };
-  const handleNumItems =()=>{
-     setNumItems(() => {
-      const result = count.reduce(
-        (sum, current) => sum + current,
-        0
-      );
+  const handleNumItems = () => {
+    setNumItems(() => {
+      const result = count.reduce((sum, current) => sum + current, 0);
       return result;
-     });
-  }
-  useEffect(()=>{
-    calcTotal()
-    handleNumItems()
-  })
+    });
+  };
+  useEffect(() => {
+    calcTotal();
+    handleNumItems();
+  });
   return (
     <ScrollView className='' horizontal={false}>
-      <Text className='py-2 px-6 text-lg font-bold'>My Cart</Text>
+      <Text className='py-2 px-6 text-lg font-bold'>
+        My CartSection
+      </Text>
       <View className=' flex flex-col w-full px-5'>
         {popular.map((item, index) => {
           return (
@@ -155,8 +154,7 @@ const Cart = () => {
                         }}>
                         -
                       </Text>
-                      <Text
-                        className='font-semibold text-xl'>
+                      <Text className='font-semibold text-xl'>
                         {count[item.id - 1]}
                       </Text>
                       <Text
@@ -214,4 +212,4 @@ const Cart = () => {
   );
 };
 
-export default Frame18;
+export default Checkout;

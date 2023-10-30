@@ -15,12 +15,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./Frame13";
 import Frame14 from "./Frame14";
 import Frame17 from "./Frame17";
-import Frame18 from "./Frame18";
+import Checkout from "./Checkout";
 import HomeTabIcon from "../../assets/Icons/tabIcons/home.svg";
-import CartTabIcon from "../../assets/Icons/tabIcons/cart.svg";
+import CartSectionTabIcon from "../../assets/Icons/tabIcons/cart.svg";
 import NotificationTabIcon from "../../assets/Icons/tabIcons/notification.svg";
 import ProfileTabIcon from "../../assets/Icons/tabIcons/profile.svg";
 import { useState, useEffect } from "react";
+import HomeScreen from "./HomeScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -50,7 +51,7 @@ export default function HomePage() {
         }}>
         <Tab.Screen
           name='Home'
-          component={Home}
+          component={HomeScreen}
           options={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               if (route?.name === "Home") {
@@ -70,18 +71,18 @@ export default function HomePage() {
             headerTitle: "",
             headerShown: false,
             tabBarStyle: {
-              display: !isDrawerOpened ? "flex" : "none",
+              // display: "none",
               height: 71,
             },
           })}
           // initialParams={{handleOpenedDrawer}}
         />
         <Tab.Screen
-          name='Frame18'
-          component={Frame18}
+          name='Checkout'
+          component={Checkout}
           options={{
             tabBarIcon: (tabInfo) => {
-              return <CartTabIcon width={30} height={30} />;
+              return <CartSectionTabIcon width={30} height={30} />;
             },
             tabBarStyle: {
               display: "none",

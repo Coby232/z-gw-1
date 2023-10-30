@@ -3,12 +3,12 @@ import {
   Text,
   View,
   ImageBackground,
-  TouchableOpacity,
+  TouchableOpacity,ActivityIndicator
 } from "react-native";
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const SignInOrUp = () => {
+export default SignInOrUp = () => {
   const navigation = useNavigation();
   return (
     <ImageBackground
@@ -32,6 +32,4 @@ const SignInOrUp = () => {
   );
 };
 
-export default SignInOrUp;
 
-const styles = StyleSheet.create({});
