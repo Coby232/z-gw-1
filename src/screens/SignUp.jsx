@@ -6,12 +6,12 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import React from "react";
 import { signUp } from "../Backend/HandleLogIn";
 import { useState, useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
-
 
 const SignUp = ({ navigate }) => {
   const navigation = useNavigation();
@@ -20,6 +20,13 @@ const SignUp = ({ navigate }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [initializing, setIntializing] = useState(true);
   const [username, setUsername] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 10000);
+  }, [isLoading]);
 
   return (
     <View className='bg-white h-screen flex flex-col items-center'>
@@ -28,6 +35,30 @@ const SignUp = ({ navigate }) => {
         className='w-36 h-36'
         resizeMode='contain'
       />
+      {isLoading ? (
+        <Portal>
+          <Modal
+            animationType='none'
+            visible={isLoading}
+            className='flex flex-col items-center justify-center rounded-xl'
+            contentContainerStyle={{
+              width: 200,
+              height: 200,
+              backgroundColor: "white",
+              borderRadius: 10,
+            }}
+            onDismiss={() => {
+              setIsLoading(!isLoading);
+            }}>
+            <Text className='text-center text-lg font-semibold'>
+              Please wait...
+            </Text>
+            <ActivityIndicator size='500' />
+          </Modal>
+        </Portal>
+      ) : (
+        ""
+      )}
       <View className='flex flex-col gap-2'>
         <Text>Sign Up</Text>
         <Text>Create a new account</Text>
@@ -69,7 +100,14 @@ const SignUp = ({ navigate }) => {
           <TouchableOpacity
             className='bg-black flex flex-row justify-center items-center p-2 rounded-full w-64'
             onPress={() => {
-              signUp(username,email, password,confirmPassword, navigation);
+              signUp(
+                username,
+                email,
+                password,
+                confirmPassword,
+                navigation
+              );
+              setIsLoading(!isLoading);
             }}>
             <Text className='text-white'>Sign up and login</Text>
           </TouchableOpacity>

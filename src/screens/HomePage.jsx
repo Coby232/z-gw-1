@@ -22,6 +22,10 @@ import NotificationTabIcon from "../../assets/Icons/tabIcons/notification.svg";
 import ProfileTabIcon from "../../assets/Icons/tabIcons/profile.svg";
 import { useState, useEffect } from "react";
 import HomeScreen from "./HomeScreen";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -71,11 +75,11 @@ export default function HomePage() {
             headerTitle: "",
             headerShown: false,
             tabBarStyle: {
-              // display: "none",
+              // display: isDrawerOpened ? "" : "none",
               height: 71,
             },
           })}
-          // initialParams={{handleOpenedDrawer}}
+          initialParams={handleOpenedDrawer}
         />
         <Tab.Screen
           name='Checkout'
