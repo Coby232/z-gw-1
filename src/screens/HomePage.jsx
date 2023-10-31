@@ -75,7 +75,7 @@ export default function HomePage() {
             headerTitle: "",
             headerShown: false,
             tabBarStyle: {
-              // display: isDrawerOpened ? "" : "none",
+              display: isDrawerOpened ? "" : "none",
               height: 71,
             },
           })}
