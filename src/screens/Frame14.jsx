@@ -10,5 +10,3 @@ const Frame14 = () => {
 }
 
 export default Frame14
-
-const styles = StyleSheet.create({})

@@ -7,7 +7,7 @@ const AddToCart = () => {
   const bottomSheetRef = useRef < BottomSheet > null;
 
   // Variables
-    const snapPoints = useMemo(() => ["55%", "70%"], []);
+    const snapPoints = useMemo(() => ["5%", "50%"], []);
 
   // Callbacks
   const handleSheetChanges = useCallback((index) => {
@@ -15,7 +15,9 @@ const AddToCart = () => {
   }, []);
 
   return (
-    <View className="flex-1">
+    <ImageBackground className="flex-1" 
+     source={require('../../assets/nike-wear-4.jpg')}
+    >
       <BottomSheet
         useRef={bottomSheetRef}
         index={1}
@@ -23,14 +25,18 @@ const AddToCart = () => {
         onChange={handleSheetChanges}
         enableOverDrag={true}
         backgroundStyle="red"
+        handleIndicatorStyle={{display:'none'}}
         >
-        <BottomSheetView>
+          <View>
+            <Text>icon</Text>
+          </View>
+        <BottomSheetView >
           <View>
             <Text>Awesome 🎉</Text>
           </View>
         </BottomSheetView>
       </BottomSheet>
-    </View>
+    </ImageBackground>
   );
 };
 
