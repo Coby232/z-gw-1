@@ -27,13 +27,12 @@ const AddToCart = () => {
   const handleSheetChanges = useCallback((index) => {
     console.log("handleSheetChanges", index);
   }, []);
-
   const [value, setValue] = useState("middle");
-  // const [currentRipple,setCurrentRipple] = useState()
   const [currentImage, setCurrentImage] = useState(
     "../../assets/cargo-pants-2.jpg"
   );
-
+  const [currentSize, setCurrentSize] = useState("");
+  const [currentColor, setCurrentColor] = useState("");
   const getImageSource = (imageName) => {
     switch (imageName) {
       case "left":
@@ -43,7 +42,7 @@ const AddToCart = () => {
       case "right":
         return require("../../assets/cargo-pants.jpg");
       default:
-        return require("../../assets/cargo-pants.jpg");
+        return require("../../assets/cargo-pants-2.jpg");
     }
   };
 
@@ -132,21 +131,98 @@ const AddToCart = () => {
                 </View>
               </View>
             </View>
-            <View className=''>
-              <View>
-                <Text>Size</Text>
-                <View className="flex flex-row">
-                  {Sizes.map((item, index) => {
-                    return (
-                      <View key={index}>
-                        <View>
-                          <Text>{item.name}</Text>
+            <View className='flex flex-row justify-between py-2 gap-x-7'>
+              <View className='w-[75%]'>
+                <Text className='font-bold text-base pb-3'>Size</Text>
+                <View>
+                  <View className='flex flex-row gap-x-4'>
+                    {Sizes.map((item, index) => {
+                      return (
+                        <View key={index}>
+                          <ToggleButton.Row
+                            onValueChange={(value) => {
+                              setCurrentSize(value);
+                            }}>
+                            <ToggleButton
+                              value={item.name}
+                              className={`rounded-full border  ${
+                                currentSize === item.name
+                                  ? "bg-black"
+                                  : ""
+                              } `}
+                              style={{ borderColor: "#BEBEBE" }}
+                              rippleColor='#000000'
+                              icon={() => {
+                                return (
+                                  <View>
+                                    <Text
+                                      className={`font-semibold ${
+                                        currentSize === item.name
+                                          ? "text-white"
+                                          : "text-gray-600"
+                                      } `}>
+                                      {item.name}
+                                    </Text>
+                                  </View>
+                                );
+                              }}
+                            />
+                          </ToggleButton.Row>
                         </View>
-                      </View>
-                    );
-                  })}
+                      );
+                    })}
+                  </View>
+                  <View className="">
+                    <Text className="font-bold py-2">
+                      Description
+                    </Text>
+                    <Text className="">
+                      Get a little lift from these
+                      Sam Edelman sandals featuring ruched straps and
+                      leather lace-up ties, while a braided jute sole
+                      makes a fresh statement for summer.
+                    </Text>
+                  </View>
                 </View>
               </View>
+              <View className='flex-1 gap-y-2'>
+                {ColorsAvailable.map((item, index) => {
+                  return (
+                    <View key={index}>
+                      <ToggleButton.Group
+                        onValueChange={(value) => {
+                          setCurrentColor(value);
+                        }}>
+                        <ToggleButton
+                          value={item.colorCode}
+                          className={`rounded-full w-7 h-7 border`}
+                          style={{ backgroundColor: item.colorCode }}
+                          icon={() => {
+                            return currentColor === item.colorCode ? (
+                              <View>
+                                <CheckIcon
+                                  height={20}
+                                  width={15}
+                                  fill={
+                                    currentColor === "#000000"
+                                      ? "white"
+                                      : "black"
+                                  }
+                                />
+                              </View>
+                            ) : (
+                              <View></View>
+                            );
+                          }}
+                        />
+                      </ToggleButton.Group>
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+            <View>
+
             </View>
           </View>
         </BottomSheetView>
@@ -163,4 +239,12 @@ const Sizes = [
   { name: "L", price: "$69.99" },
   { name: "M", price: "$59.99" },
   { name: "S", price: "$49.99" },
+  // {Description:""}
+];
+
+const ColorsAvailable = [
+  { colorCode: "#ffffff" },
+  { colorCode: "#000000" },
+  { colorCode: "#cadca7" },
+  { colorCode: "#f79f1f" },
 ];

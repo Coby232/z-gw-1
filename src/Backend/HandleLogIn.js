@@ -90,7 +90,7 @@ const signIn = async (email, password, navigation) => {
         navigation.navigate("HomePage");
       })
       .catch(async (error) => {
-        Alert.alert("Error", "Invalid Password");
+        Alert.alert("Error", `${error}`);
       });
   } catch (error) {
     console.error("Error signing in:", error);
