@@ -15,6 +15,7 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { ToggleButton } from "react-native-paper";
 import AddToFavorites from "../../assets/Icons/addTofavorites.svg";
 import CheckIcon from "../../assets/Icons/checkIcon.svg";
+import AddToCartIcon from "../../assets/Icons/addToCartIcon.svg";
 
 const AddToCart = () => {
   // Create a ref
@@ -33,6 +34,28 @@ const AddToCart = () => {
   );
   const [currentSize, setCurrentSize] = useState("");
   const [currentColor, setCurrentColor] = useState("");
+  const [currentCost, setCurrentCost] = useState(null);
+  // const [isAddedToCart, setIsAddedToCart] = useState(false);
+  const [currentQuantity, setCurrentQuantity] = useState(1);
+
+  const handleCalculation = (type) => {
+    if (type === "addition") {
+      const number = currentQuantity + 1;
+      setCurrentQuantity(number);
+    } else if ("subtraction") {
+      if (currentQuantity > 0) {
+        const number = currentQuantity - 1;
+        setCurrentQuantity(number);
+      }
+    }
+  };
+  // useEffect(() => {
+  //   if (currentQuantity) {
+  //    let totalAmount = parseFloat(currentCost || 0) * parseInt(currentQuantity);
+  //    return totalAmount;
+  //   }
+  // });
+
   const getImageSource = (imageName) => {
     switch (imageName) {
       case "left":
@@ -45,6 +68,17 @@ const AddToCart = () => {
         return require("../../assets/cargo-pants-2.jpg");
     }
   };
+
+  const selectedSize = Sizes.find(
+    (item) => item.name === currentSize
+  );
+  useEffect(() => {
+    if (currentSize) {
+      setCurrentCost(
+        selectedSize ? selectedSize.price : null
+      );
+    }
+  }, [currentSize]);
 
   return (
     <ImageBackground
@@ -121,9 +155,23 @@ const AddToCart = () => {
               <View className=' flex flex-col gap-y-2'>
                 <View className='bg-slate-100 rounded-full border border-slate-200 '>
                   <View className='flex flex-row items-center gap-x-2 justify-center'>
-                    <Text style={{ fontSize: 30 }}>-</Text>
-                    <Text style={{ fontSize: 20 }}>1</Text>
-                    <Text style={{ fontSize: 20 }}>+</Text>
+                    <Text
+                      style={{ fontSize: 30 }}
+                      onPress={() => {
+                        handleCalculation("subtraction");
+                      }}>
+                      -
+                    </Text>
+                    <Text style={{ fontSize: 20 }}>
+                      {currentQuantity}
+                    </Text>
+                    <Text
+                      style={{ fontSize: 20 }}
+                      onPress={() => {
+                        handleCalculation("addition");
+                      }}>
+                      +
+                    </Text>
                   </View>
                 </View>
                 <View>
@@ -172,15 +220,15 @@ const AddToCart = () => {
                       );
                     })}
                   </View>
-                  <View className="">
-                    <Text className="font-bold py-2">
+                  <View className=''>
+                    <Text className='font-bold py-2'>
                       Description
                     </Text>
-                    <Text className="">
-                      Get a little lift from these
-                      Sam Edelman sandals featuring ruched straps and
-                      leather lace-up ties, while a braided jute sole
-                      makes a fresh statement for summer.
+                    <Text className=''>
+                      Get a little lift from these Sam Edelman sandals
+                      featuring ruched straps and leather lace-up
+                      ties, while a braided jute sole makes a fresh
+                      statement for summer.
                     </Text>
                   </View>
                 </View>
@@ -221,8 +269,17 @@ const AddToCart = () => {
                 })}
               </View>
             </View>
-            <View>
-
+            <View className='flex flex-row justify-between items-center py-5'>
+              <View>
+                <Text className='font-bold text-md'>Total cost </Text>
+                <Text>{currentCost}</Text>
+              </View>
+              <TouchableOpacity className='bg-black flex flex-row w-44 h-10 rounded-full justify-center items-center gap-x-2'>
+                <View>
+                  <AddToCartIcon />
+                </View>
+                <Text className='text-white'>Add to cart</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </BottomSheetView>
@@ -234,11 +291,11 @@ const AddToCart = () => {
 export default AddToCart;
 
 const Sizes = [
-  { name: "4XL", price: "$89.99" },
-  { name: "XL", price: "$79.99" },
-  { name: "L", price: "$69.99" },
-  { name: "M", price: "$59.99" },
-  { name: "S", price: "$49.99" },
+  { name: "S", price: 49.99 },
+  { name: "M", price: 59.99 },
+  { name: "L", price: 69.99 },
+  { name: "XL", price: 79.99 },
+  { name: "XXL", price: 89.99 },
   // {Description:""}
 ];
 
