@@ -49,12 +49,8 @@ const AddToCart = () => {
       }
     }
   };
-  // useEffect(() => {
-  //   if (currentQuantity) {
-  //    let totalAmount = parseFloat(currentCost || 0) * parseInt(currentQuantity);
-  //    return totalAmount;
-  //   }
-  // });
+  const totalAmount =
+    Math.round((parseFloat(currentCost || 0) * parseInt(currentQuantity))*100)/100 ;
 
   const getImageSource = (imageName) => {
     switch (imageName) {
@@ -74,9 +70,7 @@ const AddToCart = () => {
   );
   useEffect(() => {
     if (currentSize) {
-      setCurrentCost(
-        selectedSize ? selectedSize.price : null
-      );
+      setCurrentCost(selectedSize ? selectedSize.price : null);
     }
   }, [currentSize]);
 
@@ -272,7 +266,7 @@ const AddToCart = () => {
             <View className='flex flex-row justify-between items-center py-5'>
               <View>
                 <Text className='font-bold text-md'>Total cost </Text>
-                <Text>{currentCost}</Text>
+                <Text>{totalAmount}</Text>
               </View>
               <TouchableOpacity className='bg-black flex flex-row w-44 h-10 rounded-full justify-center items-center gap-x-2'>
                 <View>
