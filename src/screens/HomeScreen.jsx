@@ -12,7 +12,7 @@ export default function HomeScreen() {
     <SafeAreaView className='flex-1'>
       <NavigationContainer independent={true}>
         <Stack.Navigator
-          initialRouteName='AddToCart'
+          initialRouteName='Home'
           screenOptions={{
             headerShown: false,
           }}>
