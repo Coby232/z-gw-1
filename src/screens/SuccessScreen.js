@@ -1,9 +1,15 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React,{ useEffect } from 'react'
 import { Image } from 'react-native'
 import { TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
 
 const SuccessScreen = () => {
+
+  const navigation = useNavigation();
+
+  
+
   return (
     <View className=' m-4'>
       <Image source={require('../../assets/img7.png')} 
@@ -13,7 +19,9 @@ const SuccessScreen = () => {
       <Text className=' opacity-20 ml-20 mt-2 '>You have successfully registered in 
       {'\n'}    our app and start working in it.</Text>
 
-      <TouchableOpacity className='bg-black rounded-3xl w-80 h-10 ml-8 mt-64'>
+      <TouchableOpacity 
+      onPress={()=> navigation.navigate('SlideShow')}
+      className='bg-black rounded-3xl w-80 h-10 ml-8 mt-64'>
         <Text className='text-white ml-24 text-lg mt-1.5'> Start Shopping</Text >
       </TouchableOpacity>
     </View>

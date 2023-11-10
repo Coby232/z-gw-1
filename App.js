@@ -1,71 +1,45 @@
-import { View} from 'react-native'
 import React from 'react'
 import WelcomeScreen from './src/screens/WelcomeScreen'
 import SignScreen from './src/screens/SignScreen'
-import { SafeAreaView } from 'react-native'
-
-import Advantage from './src/screens/Advantage'
-import { ScrollView } from 'react-native'
 import LoginScreen from './src/screens/LoginScreen'
 import SignUpScreen from './src/screens/SignUpScreen'
 import SuccessScreen from './src/screens/SuccessScreen'
+import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { PaperProvider } from "react-native-paper";
+import { LogBox  } from 'react-native';
 import CategoriesScreen from './src/screens/CategoriesScreen'
-import Frame9 from './src/screens/Frame9'
-import Frame10 from './src/screens/Frame10'
-import Frame25 from './src/screens/Frame25'
-import Frame24 from './src/screens/Frame24'
+import Carousel from './src/screens/Carousel'
 
 
+LogBox.ignoreAllLogs();
 
-const App = () => {
+const Stack = createStackNavigator();
+
+export default function App() {
   return (
-  <ScrollView>
-   <View >
-    <WelcomeScreen />
-      
-    </View> 
+    <SafeAreaView className='flex-1'>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName='Welcome'
+            screenOptions={{
+              headerShown: false,
+            }}>
+            
 
-   <SafeAreaView flex-1>
-      <SignScreen />     
-    </SafeAreaView> 
-     
-    <SafeAreaView >
-      <Advantage />
-    </SafeAreaView>
-    
-    <SafeAreaView>
+            <Stack.Screen name='Welcome' component={WelcomeScreen} />
+            <Stack.Screen name='SignInOrUp' component={SignScreen} />
+            <Stack.Screen name='SignIn' component={LoginScreen} />
+            <Stack.Screen name='SignUp' component={SignUpScreen} />
+            <Stack.Screen name='SlideShow' component={Carousel} />
+            <Stack.Screen name='HomePage' component={SuccessScreen} />
+            <Stack.Screen name='cart' component={CategoriesScreen} />
 
-      <LoginScreen />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
     </SafeAreaView>
-    
-    <View >
-    <SignUpScreen />
-      </View>
-      <SafeAreaView>
-        <SuccessScreen />
-      </SafeAreaView>
-      
-      <SafeAreaView>
-      <CategoriesScreen />
-      </SafeAreaView>
-      
-      
-      <SafeAreaView>
-        <Frame9 />
-      </SafeAreaView>
-      <SafeAreaView>
-        <Frame10/>
-      </SafeAreaView>
-        
-<SafeAreaView>
-  <Frame25 />
-</SafeAreaView>
-<SafeAreaView>
-  <Frame24/>
-</SafeAreaView>
-</ScrollView>
-      
-  )
+  );
 }
-
-export default App

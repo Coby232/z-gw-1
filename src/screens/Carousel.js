@@ -1,16 +1,21 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Image } from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
-import { ScrollView } from 'react-native'
+import Swiper from 'react-native-swiper';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native'
 
 
-const Advantage = () => {
-  return (
-    <View>
-    <ScrollView horizontal={true} >
-    <View className='flex-row'>
-
+const Carousel = () => {
+  const navigation = useNavigation()
+      return (
+       
+        <View className='flex-1 justify-center alignItems-center'>
+      
+    <Swiper  
+    showsButtons={false}
+    autoplay={true}  // Set autoplay to true
+    autoplayTimeout={3}>
             <View className='m-8'>
             <Image source={require('../../assets/img3.png')} 
             style={{height:420}}
@@ -43,15 +48,21 @@ const Advantage = () => {
             </View>
             
     
-    </View>
-    </ScrollView>
-    <TouchableOpacity >
-    <Image source={require('../../assets/butt.png')}
-    className='w-20 h-24 rounded-3xl ml-80 ' />
+   </Swiper> 
+   
+   <View>
+    <TouchableOpacity
+    className='w-20 h-24  ml-80 '
+    onPress={() => navigation.navigate('cart')} >
+    <Ionicons name="md-play-skip-forward-circle-sharp" size={72} color="black"
+    
+     />
    
    </TouchableOpacity>
     </View>
+    
+   </View>
   )
 }
 
-export default Advantage
+export default  Carousel 

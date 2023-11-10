@@ -3,7 +3,7 @@ import React from 'react'
 import { TouchableOpacity } from 'react-native'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { TextInput } from 'react-native-paper'
-import { ScrollView } from 'react-native'
+
 
 const Frame9 = () => {
   return (
