@@ -11,10 +11,10 @@ import { auth, db ,app} from "./firebase";
 import { doc, setDoc } from "firebase/firestore";
 import uuid from "react-native-uuid";
 import { useNavigation } from "@react-navigation/native";
-import {
-  GoogleSignin,
-  statusCodes,
-} from "@react-native-google-signin/google-signin";
+// import {
+//   GoogleSignin,
+//   statusCodes,
+// } from "@react-native-google-signin/google-signin";
 
 const userid = uuid.v4();
 const userInfo = {
