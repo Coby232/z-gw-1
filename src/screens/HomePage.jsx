@@ -75,7 +75,7 @@ export default function HomePage() {
             headerTitle: "",
             headerShown: false,
             tabBarStyle: {
-              display: isDrawerOpened ? "" : "none",
+              // display: isDrawerOpened ? "" : "none",
               height: 71,
             },
           })}
@@ -145,7 +145,7 @@ export default function HomePage() {
             headerTitle: "",
             headerShown: false,
             tabBarStyle: {
-              display: !isDrawerOpened ? "flex" : "none",
+              // display: !isDrawerOpened ? "flex" : "none",
               height: 71,
             },
           })}

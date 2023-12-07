@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView className='flex-1'>
+    <SafeAreaView className='flex-1 '>
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator
