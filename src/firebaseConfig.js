@@ -1,13 +1,11 @@
-
 const firebaseConfig = {
-  apiKey: "AIzaSyDaKjYiEQoqIezKuunGjwJc9CnRwFCtDfk",
-  authDomain: "fashion-e-commerce-cdd52.firebaseapp.com",
-  projectId: "fashion-e-commerce-cdd52",
-  storageBucket: "fashion-e-commerce-cdd52.appspot.com",
-  messagingSenderId: "396086826061",
-  appId: "1:396086826061:web:4a9fd49f42c58b21657804"
+  apiKey: "AIzaSyDe7VB0-WkFEFMgx-_H0Mw195aE2rNI4mE",
+  authDomain: "e-commerce-app-75748.firebaseapp.com",
+  projectId: "e-commerce-app-75748",
+  storageBucket: "e-commerce-app-75748.appspot.com",
+  messagingSenderId: "571476852217",
+  appId: "1:571476852217:web:a3e90b79047d2053c4d128",
+  measurementId: "G-Q8S0MZW67C",
 };
-
-
 
 export default firebaseConfig;

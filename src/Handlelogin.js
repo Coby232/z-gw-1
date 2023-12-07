@@ -1,13 +1,24 @@
 import { Alert } from "react-native";
-import { createUserWithEmailAndPassword,
-    signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "./firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithCredential
+} from "firebase/auth";
+import { auth, db ,app} from "./firebase";
 import { doc, setDoc } from "firebase/firestore";
 import uuid from "react-native-uuid";
+import { useNavigation } from "@react-navigation/native";
+import {
+  GoogleSignin,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
 
 const userid = uuid.v4();
 const userInfo = {
-    username: "username",
+  username: "username",
   email: "email",
   password: "password",
   createdAt: new Date(),
@@ -46,9 +57,9 @@ const signUp = async (
     )
       .catch(async (error) => {
         if (
-          (error.code === "auth/user-not-found" ||
-            error.code === "auth/invalid-login-credentials") ||
-          (error.code === "auth/email-already-in-use")
+          error.code === "auth/user-not-found" ||
+          error.code === "auth/invalid-login-credentials" ||
+          error.code === "auth/email-already-in-use"
         ) {
           Alert.alert(
             "Account Exists",
@@ -95,4 +106,20 @@ const signIn = async (email, password, navigation) => {
   }
 };
 
-export { signUp, signIn };
+// Continue with Google
+
+// Initialize Google Signin
+// GoogleSignin.configure({
+//   webClientId:
+//     "571476852217-lkoq8alsnbkget4s2is47tgo2bahlajs.apps.googleusercontent.com", // Replace with your actual web client ID
+// });
+
+const signInWithGoogle = async () => {
+  try {
+
+  } catch (error) {
+    Alert.alert("Error", error.message);
+  }
+};
+
+export { signUp, signIn, signInWithGoogle };
