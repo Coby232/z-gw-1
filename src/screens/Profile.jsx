@@ -11,7 +11,16 @@ import { signOut } from "../Backend/HandleLogIn";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput, ToggleButton, Switch } from "react-native-paper";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleDarkMode } from "../features/ProfileSlice";
+import {
+  toggleDarkMode,
+  setLanguage,
+  setUsername,
+  setGender,
+  setAge,
+  setEmail,
+  setLogout,
+  setProfileImage,
+} from "../features/ProfileSlice";
 
 const userInfo = [
   { name: "Name" },
@@ -30,8 +39,8 @@ const userSettings = [
 const Profile = () => {
   const navigation = useNavigation();
   const [username, setUsername] = useState("");
-  // const [placeholder, setPlaceholder] = useState("");
-  const [value, setValue] = useState("male");
+  // const [gender, setgender] = useState("male");
+  const gender = useSelector((state)=>state.profile.gender);
   const darkMode = useSelector((state) => state.profile.darkMode);
   const dispatch = useDispatch();
 
@@ -70,11 +79,11 @@ const Profile = () => {
                 <TextInput
                   placeholder={`Enter your ${item.name}`}
                   className='w-2/3 h-12 border-b bg-transparent'
-                  // value
+                  // gender
                 />
               ) : (
                 <ToggleButton.Row
-                  onValueChange={(value) => setValue(value)}
+                  onValueChange={(gender) => dispatch(setGender(gender))}
                   className='w-2/3 flex flex-row justify-between'>
                   <ToggleButton
                     icon={() => {
@@ -82,18 +91,18 @@ const Profile = () => {
                         <View className='flex flex-row justify-center items-center gap-x-2'>
                           <View
                             className={`bg-white ${
-                              value === "male" ? "w-5 h-5" : ""
+                              gender === "male" ? "w-5 h-5" : ""
                             } rounded-full flex justify-center items-center`}>
                             <View
                               className={`${
-                                value === "male"
+                                gender === "male"
                                   ? "border-2"
                                   : "border border-slate-300"
                               } bg-white w-4 h-4 rounded-full`}></View>
                           </View>
                           <Text
                             className={`${
-                              value === "male"
+                              gender === "male"
                                 ? "text-white"
                                 : "text-black"
                             } text-base`}>
@@ -108,7 +117,7 @@ const Profile = () => {
                     style={{ borderColor: "#DDDDDD9C" }}
                     rippleColor='#000000'
                     className={`${
-                      value === "male" ? "bg-black" : "bg-white"
+                      gender === "male" ? "bg-black" : "bg-white"
                     } w-24 rounded-xl border`}
                     onPress={() => {
                       setUsername("male");
@@ -121,18 +130,18 @@ const Profile = () => {
                         <View className='flex flex-row justify-center items-center gap-x-2 p-2'>
                           <View
                             className={`bg-white ${
-                              value === "female" ? "w-5 h-5" : ""
+                              gender === "female" ? "w-5 h-5" : ""
                             }   rounded-full flex justify-center items-center`}>
                             <View
                               className={`${
-                                value === "female"
+                                gender === "female"
                                   ? "border-2"
                                   : "border border-slate-300"
                               } bg-white w-4 h-4 rounded-full`}></View>
                           </View>
                           <Text
                             className={`${
-                              value === "female"
+                              gender === "female"
                                 ? "text-white"
                                 : "text-black"
                             } text-base`}>
@@ -147,7 +156,7 @@ const Profile = () => {
                     style={{ borderColor: "#DDDDDD9C" }}
                     rippleColor='#000000'
                     className={`${
-                      value === "female" ? "bg-black" : "bg-white"
+                      gender === "female" ? "bg-black" : "bg-white"
                     } w-24 rounded-xl border `}
                     onPress={() => {
                       setUsername("female");
@@ -182,7 +191,7 @@ const Profile = () => {
                     <Text>{darkMode ? "On" : "Off"}</Text>
                     <Switch
                       value={darkMode}
-                      onValueChange={handleToggleDarkMode}
+                      onValueChange={()=>handleToggleDarkMode()}
                     />
                   </View>
                 )}
