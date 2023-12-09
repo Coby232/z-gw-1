@@ -9,7 +9,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { signOut } from "../Backend/HandleLogIn";
 import { useNavigation } from "@react-navigation/native";
-import { TextInput } from "react-native-paper";
+import { TextInput, ToggleButton, Switch } from "react-native-paper";
 
 const userInfo = [
   { name: "Name" },
@@ -20,16 +20,18 @@ const userInfo = [
 
 const userSettings = [
   { name: "Language" },
-  { name: "Gender" },
-  { name: "Age" },
-  { name: "Email" },
+  { name: "Notification" },
+  { name: "Dark Mode" },
+  { name: "Help" },
 ];
 
 const Profile = () => {
   const navigation = useNavigation();
-  const [username, setUsername] = useState("Fscreation");
-  const [placeholder, setPlaceholder] = useState("Fscreation");
-  
+  const [username, setUsername] = useState("");
+  const [placeholder, setPlaceholder] = useState("");
+  const [value, setValue] = useState("male");
+  const [darkMode, setDarkMode] = useState(false);
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -38,7 +40,7 @@ const Profile = () => {
         justifyContent: "center",
         alignItems: "center",
       }}
-      className='px-10'
+      className={`px-7 ${darkMode ? "bg-slate-700" : "bg-white"}`}
       horizontal={false}>
       <View className='flex flex-col items-center gap-y-3 py-5'>
         <Image
@@ -57,11 +59,95 @@ const Profile = () => {
               className='flex flex-row justify-between items-center'
               key={index}>
               <Text className='text-base'>{item.name}</Text>
-              <TextInput
-                placeholder={`Enter your ${item.name}`}
-                className='w-2/3 h-12 border-b bg-transparent'
-                // value
-              />
+              {item.name !== "Gender" ? (
+                <TextInput
+                  placeholder={`Enter your ${item.name}`}
+                  className='w-2/3 h-12 border-b bg-transparent'
+                  // value
+                />
+              ) : (
+                <ToggleButton.Row
+                  onValueChange={(value) => setValue(value)}
+                  className='w-2/3 flex flex-row justify-between'>
+                  <ToggleButton
+                    icon={() => {
+                      return (
+                        <View className='flex flex-row justify-center items-center gap-x-2'>
+                          <View
+                            className={`bg-white ${
+                              value === "male" ? "w-5 h-5" : ""
+                            } rounded-full flex justify-center items-center`}>
+                            <View
+                              className={`${
+                                value === "male"
+                                  ? "border-2"
+                                  : "border border-slate-300"
+                              } bg-white w-4 h-4 rounded-full`}></View>
+                          </View>
+                          <Text
+                            className={`${
+                              value === "male"
+                                ? "text-white"
+                                : "text-black"
+                            } text-base`}>
+                            Male
+                          </Text>
+                        </View>
+                      );
+                    }}
+                    value={username}
+                    size={20}
+                    iconColor='white'
+                    style={{ borderColor: "#DDDDDD9C" }}
+                    rippleColor='#000000'
+                    className={`${
+                      value === "male" ? "bg-black" : "bg-white"
+                    } w-24 rounded-xl border`}
+                    onPress={() => {
+                      setUsername("male");
+                    }}
+                  />
+
+                  <ToggleButton
+                    icon={() => {
+                      return (
+                        <View className='flex flex-row justify-center items-center gap-x-2 p-2'>
+                          <View
+                            className={`bg-white ${
+                              value === "female" ? "w-5 h-5" : ""
+                            }   rounded-full flex justify-center items-center`}>
+                            <View
+                              className={`${
+                                value === "female"
+                                  ? "border-2"
+                                  : "border border-slate-300"
+                              } bg-white w-4 h-4 rounded-full`}></View>
+                          </View>
+                          <Text
+                            className={`${
+                              value === "female"
+                                ? "text-white"
+                                : "text-black"
+                            } text-base`}>
+                            Female
+                          </Text>
+                        </View>
+                      );
+                    }}
+                    value='female'
+                    size={20}
+                    iconColor='black'
+                    style={{ borderColor: "#DDDDDD9C" }}
+                    rippleColor='#000000'
+                    className={`${
+                      value === "female" ? "bg-black" : "bg-white"
+                    } w-24 rounded-xl border `}
+                    onPress={() => {
+                      setUsername("female");
+                    }}
+                  />
+                </ToggleButton.Row>
+              )}
             </View>
           );
         })}
@@ -71,20 +157,29 @@ const Profile = () => {
         <View className='w-full rounded-2xl border border-slate-300 h-max p-5 flex flex-col gap-y-2'>
           {userSettings.map((item, index) => {
             return (
-              <View className='flex flex-row justify-between'>
+              <View
+                className='flex flex-row justify-between items-center'
+                key={index}>
                 <View>
                   <Image />
                   <Text>{item.name}</Text>
                 </View>
-                <View>
-                  <Text>English</Text>
-                </View>
+                {item.name !== "Dark Mode" ? (
+                  <View>
+                    <Text>English</Text>
+                  </View>
+                ) : (
+                  <Switch
+                    value={darkMode}
+                    onValueChange={()=>setDarkMode(!darkMode)}
+                  />
+                )}
               </View>
             );
           })}
         </View>
       </View>
-      <View className="w-full pb-5">
+      <View className='w-full pb-5'>
         <TouchableOpacity
           className='bg-black p-3 rounded-lg'
           onPress={() => {
