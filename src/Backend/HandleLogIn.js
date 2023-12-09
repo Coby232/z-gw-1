@@ -6,6 +6,7 @@ import {
 import { auth, db } from "./firebase";
 import { doc, setDoc } from "firebase/firestore";
 import uuid from "react-native-uuid";
+import { useNavigation } from "@react-navigation/native";
 
 const userid = uuid.v4();
 const userInfo = {
@@ -102,8 +103,13 @@ const signIn = async (email, password, navigation) => {
   }
 };
 
-const signOut = () => {
-  auth.signOut();
+const signOut = async () => {
+  try {
+    await signOut(auth).then().catch();
+    // navigation.navigate("SignIn");
+  } catch (error) {
+    console.error("Error signing out:", error);
+  }
 };
 
 export { signUp, signIn, signOut };
