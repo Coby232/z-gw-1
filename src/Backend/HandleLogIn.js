@@ -30,7 +30,8 @@ const signUp = async (
   email,
   password,
   confirmedPassword,
-  navigation
+  navigation,
+  checked
 ) => {
   if (email.trim() === "" || password.trim() === "") {
     Alert.alert("Please enter email and password");
@@ -41,30 +42,34 @@ const signUp = async (
     return;
   }
   if (password === confirmedPassword) {
-    const userCredentials = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    )
-      .catch(async (error) => {
-        if (
-          (error.code === "auth/user-not-found" ||
-            error.code === "auth/invalid-login-credentials") ||
-          (error.code === "auth/email-already-in-use")
-        ) {
-          Alert.alert(
-            "Account Exists",
-            "You are trying to sign up with and existing account"
-          );
-        }
-      })
-      .then(async () => {
-        handleUserDetails(username, email, password);
-        await setDoc(doc(db, "users", userid), userInfo);
-        navigation.navigate("HomePage");
-      });
-    // const user = userCredentials.user;
-    // console.log("Registered with:", user.email);
+    if (checked) {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      )
+        .catch(async (error) => {
+          if (
+            error.code === "auth/user-not-found" ||
+            error.code === "auth/invalid-login-credentials" ||
+            error.code === "auth/email-already-in-use"
+          ) {
+            Alert.alert(
+              "Account Exists",
+              "You are trying to sign up with and existing account"
+            );
+          }
+        })
+        .then(async () => {
+          handleUserDetails(username, email, password);
+          await setDoc(doc(db, "users", userid), userInfo);
+          navigation.navigate("MainPage");
+        });
+      // const user = userCredentials.user;
+      // console.log("Registered with:", user.email);
+    } else {
+      Alert.alert("Please make sure you've checked the agreement");
+    }
   } else {
     Alert.alert("Not working", "didnt work, still error");
   }
@@ -86,8 +91,8 @@ const signIn = async (email, password, navigation) => {
         // Signed in
         const user = userCredential.user;
         console.log("Signed in with:", user.email);
-        // Navigate to the HomePage
-        navigation.navigate("HomePage");
+        // Navigate to the MainPage
+        navigation.navigate("MainPage");
       })
       .catch(async (error) => {
         Alert.alert("Error", `${error}`);
@@ -97,4 +102,8 @@ const signIn = async (email, password, navigation) => {
   }
 };
 
-export { signUp, signIn };
+const signOut = () => {
+  auth.signOut();
+};
+
+export { signUp, signIn, signOut };

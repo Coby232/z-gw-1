@@ -16,11 +16,13 @@ import { ToggleButton } from "react-native-paper";
 import AddToFavorites from "../../assets/Icons/addTofavorites.svg";
 import CheckIcon from "../../assets/Icons/checkIcon.svg";
 import AddToCartIcon from "../../assets/Icons/addToCartIcon.svg";
+import { useNavigation } from "@react-navigation/native";
 
-const AddToCart = () => {
+const AddToCart = ({route}) => {
+  const navigation = useNavigation();
+  const handleAddToCart=()=>{navigation.navigate("Home",{screens:"Checkout"})}
   // Create a ref
   const bottomSheetRef = useRef < BottomSheet > null;
-
   // Variables
   const snapPoints = useMemo(() => ["10%", "50%"], []);
 
@@ -268,7 +270,11 @@ const AddToCart = () => {
                 <Text className='font-bold text-md'>Total cost </Text>
                 <Text>{totalAmount}</Text>
               </View>
-              <TouchableOpacity className='bg-black flex flex-row w-44 h-10 rounded-full justify-center items-center gap-x-2'>
+              <TouchableOpacity className='bg-black flex flex-row w-44 h-10 rounded-full justify-center items-center gap-x-2'
+              onPress={()=>{
+                handleAddToCart()
+              }}
+              >
                 <View>
                   <AddToCartIcon />
                 </View>

@@ -15,7 +15,7 @@ export default SignInOrUp = () => {
 
   return (
     <ImageBackground
-      source={require("../../assets/SignInOrUp.jpg")}
+      source={require("../../assets/SignInOrUp.png")}
       className='h-screen flex flex-col gap-y-3 justify-end py-20 items-center'>
       
       <TouchableOpacity
