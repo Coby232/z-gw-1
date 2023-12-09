@@ -160,8 +160,10 @@ const Profile = () => {
               <View
                 className='flex flex-row justify-between items-center'
                 key={index}>
-                <View>
-                  <Image />
+                <View className='flex flex-row items-center gap-x-4'>
+                  <View className='bg-slate-400 w-10 h-10 rounded-lg'>
+                    <Image />
+                  </View>
                   <Text>{item.name}</Text>
                 </View>
                 {item.name !== "Dark Mode" ? (
@@ -169,10 +171,13 @@ const Profile = () => {
                     <Text>English</Text>
                   </View>
                 ) : (
-                  <Switch
-                    value={darkMode}
-                    onValueChange={()=>setDarkMode(!darkMode)}
-                  />
+                  <View className='flex flex-row items-center'>
+                    <Text>{darkMode ? "On" : "Off"}</Text>
+                    <Switch
+                      value={darkMode}
+                      onValueChange={() => setDarkMode(!darkMode)}
+                    />
+                  </View>
                 )}
               </View>
             );
