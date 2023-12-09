@@ -10,6 +10,8 @@ import React, { useState, useEffect } from "react";
 import { signOut } from "../Backend/HandleLogIn";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput, ToggleButton, Switch } from "react-native-paper";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleDarkMode } from "../features/ProfileSlice";
 
 const userInfo = [
   { name: "Name" },
@@ -28,9 +30,14 @@ const userSettings = [
 const Profile = () => {
   const navigation = useNavigation();
   const [username, setUsername] = useState("");
-  const [placeholder, setPlaceholder] = useState("");
+  // const [placeholder, setPlaceholder] = useState("");
   const [value, setValue] = useState("male");
-  const [darkMode, setDarkMode] = useState(false);
+  const darkMode = useSelector((state) => state.profile.darkMode);
+  const dispatch = useDispatch();
+
+  const handleToggleDarkMode = () => {
+    dispatch(toggleDarkMode());
+  };
 
   return (
     <ScrollView
@@ -175,7 +182,7 @@ const Profile = () => {
                     <Text>{darkMode ? "On" : "Off"}</Text>
                     <Switch
                       value={darkMode}
-                      onValueChange={() => setDarkMode(!darkMode)}
+                      onValueChange={handleToggleDarkMode}
                     />
                   </View>
                 )}
