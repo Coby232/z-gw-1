@@ -2,7 +2,7 @@ import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Home from "./Frame13";
+import Home from "./Home";
 import AddToCart from "./AddToCart";
 
 const Stack = createStackNavigator();

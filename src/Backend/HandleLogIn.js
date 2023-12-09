@@ -63,7 +63,7 @@ const signUp = async (
         .then(async () => {
           handleUserDetails(username, email, password);
           await setDoc(doc(db, "users", userid), userInfo);
-          navigation.navigate("HomePage");
+          navigation.navigate("MainPage");
         });
       // const user = userCredentials.user;
       // console.log("Registered with:", user.email);
@@ -91,8 +91,8 @@ const signIn = async (email, password, navigation) => {
         // Signed in
         const user = userCredential.user;
         console.log("Signed in with:", user.email);
-        // Navigate to the HomePage
-        navigation.navigate("HomePage");
+        // Navigate to the MainPage
+        navigation.navigate("MainPage");
       })
       .catch(async (error) => {
         Alert.alert("Error", `${error}`);
@@ -102,4 +102,8 @@ const signIn = async (email, password, navigation) => {
   }
 };
 
-export { signUp, signIn };
+const signOut = () => {
+  auth.signOut();
+};
+
+export { signUp, signIn, signOut };

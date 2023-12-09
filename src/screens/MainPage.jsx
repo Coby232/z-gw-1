@@ -12,9 +12,9 @@ import {
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "./Frame13";
-import Frame14 from "./Frame14";
-import Frame17 from "./Frame17";
+import Home from "./Home";
+import Notification from "./Notification";
+import Profile from "./Profile";
 import Checkout from "./Checkout";
 import HomeTabIcon from "../../assets/Icons/tabIcons/home.svg";
 import CartSectionTabIcon from "../../assets/Icons/tabIcons/cart.svg";
@@ -33,7 +33,7 @@ const Stack = createStackNavigator();
 const ScreenWidth = Dimensions.get("screen").width;
 const ScreenHeight = Dimensions.get("screen").height;
 
-export default function HomePage() {
+export default function MainPage() {
   const [isDrawerOpened, setIsDrawerOpen] = useState(false);
   const handleOpenedDrawer = (childData) => {
     setIsDrawerOpen(childData);
@@ -98,7 +98,7 @@ export default function HomePage() {
         />
         <Tab.Screen
           name='Notify'
-          component={Frame14}
+          component={Notification}
           options={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               if (route?.name === "Notify") {
@@ -125,7 +125,7 @@ export default function HomePage() {
         />
         <Tab.Screen
           name='Profile'
-          component={Frame17}
+          component={Profile}
           options={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               if (route?.name === "Profile") {

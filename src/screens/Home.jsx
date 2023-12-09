@@ -7,7 +7,13 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
   DrawerActions,
@@ -33,7 +39,7 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export default function Home({ route }) {
-  const [addToCart,setAddToCart]=useState(false);
+  const [addToCart, setAddToCart] = useState(false);
   const navigation = useNavigation();
   const handleAddToCart = () => {
     navigation.navigate("AddToCart");
@@ -41,23 +47,23 @@ export default function Home({ route }) {
 
   return (
     <SafeAreaView className='flex-1 '>
-      <NavigationContainer independent={true} >
-        <DrawerNavigator handleClick={handleAddToCart}/>
+      <NavigationContainer independent={true}>
+        <DrawerNavigator handleClick={handleAddToCart} />
       </NavigationContainer>
     </SafeAreaView>
   );
 }
 
-const DrawerNavigator = ({handleClick}) => {
+const DrawerNavigator = ({ handleClick }) => {
   const navigation = useNavigation();
   return (
     <Drawer.Navigator
       // drawerContent={(props) => <DrawerMenu {...props} />}
-      initialRouteName='Frame13'
+      initialRouteName='Home'
       drawerPosition='right'>
       <Drawer.Screen
-        name='Frame13'
-        component={Frame13}
+        name='Home'
+        component={Page}
         options={{
           headerShown: true,
           headerTransparent: true,
@@ -81,13 +87,13 @@ const DrawerNavigator = ({handleClick}) => {
             );
           },
         }}
-        initialParams={{handleClick}}
+        initialParams={{ handleClick }}
       />
     </Drawer.Navigator>
   );
 };
 
-const Frame13 = ({route}) => {
+const Page = ({ route }) => {
   const { handleClick } = route.params;
   const navigation = useNavigation();
   // callbacks
@@ -99,7 +105,7 @@ const Frame13 = ({route}) => {
   }, []);
   const bottomSheetModalRef = useRef < BottomSheetModal > null;
   const snapPoints = useMemo(() => ["50%", "70%"], []);
-  
+
   return (
     <NavigationContainer independent={true}>
       <BottomSheetModalProvider>
@@ -124,7 +130,9 @@ const Frame13 = ({route}) => {
                         </Text>
                         <TouchableOpacity
                           className='bg-black w-20 p-[4] rounded-full'
-                          onPress={()=>{handleClick()}}>
+                          onPress={() => {
+                            handleClick();
+                          }}>
                           <Text className='text-white text-center'>
                             Get it Now
                           </Text>
