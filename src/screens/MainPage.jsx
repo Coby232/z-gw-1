@@ -26,6 +26,9 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
+import { useSelector, useDispatch } from "react-redux";
+
+                
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -33,8 +36,10 @@ const Stack = createStackNavigator();
 const ScreenWidth = Dimensions.get("screen").width;
 const ScreenHeight = Dimensions.get("screen").height;
 
+
 export default function MainPage() {
   const [isDrawerOpened, setIsDrawerOpen] = useState(false);
+  const darkMode = useSelector((state) => state.profile.darkMode);
   const handleOpenedDrawer = (childData) => {
     setIsDrawerOpen(childData);
   };
@@ -47,7 +52,9 @@ export default function MainPage() {
         }}
         screenOptions={{
           tabBarLabelStyle: { color: "black", height: 25 },
-          tabBarStyle: { height: ScreenHeight * 0.085 },
+          tabBarStyle: {
+            height: ScreenHeight * 0.085,
+          },
           headerTransparent: true,
           headerTitle: "",
           tabBarHideOnKeyboard: true,
@@ -75,7 +82,9 @@ export default function MainPage() {
             headerTitle: "",
             headerShown: false,
             tabBarStyle: {
-              // display: isDrawerOpened ? "" : "none",
+              backgroundColor: darkMode
+                ? "rgb(55, 65, 81)"
+                : "#ffffff",
               height: 71,
             },
           })}
@@ -90,6 +99,9 @@ export default function MainPage() {
             },
             tabBarStyle: {
               display: "none",
+              backgroundColor: darkMode
+                ? "rgb(55, 65, 81)"
+                : "#ffffff",
             },
             headerTransparent: true,
             headerTitle: "",
@@ -118,7 +130,9 @@ export default function MainPage() {
             headerTitle: "",
             headerShown: false,
             tabBarStyle: {
-              display: !isDrawerOpened ? "flex" : "none",
+              backgroundColor: darkMode
+                ? "rgb(55, 65, 81)"
+                : "#ffffff",
               height: 71,
             },
           })}
@@ -145,7 +159,9 @@ export default function MainPage() {
             headerTitle: "",
             headerShown: false,
             tabBarStyle: {
-              // display: !isDrawerOpened ? "flex" : "none",
+              backgroundColor: darkMode
+                ? "rgb(55, 65, 81)"
+                : "#ffffff",
               height: 71,
             },
           })}

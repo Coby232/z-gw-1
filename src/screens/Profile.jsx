@@ -66,7 +66,12 @@ const Profile = () => {
           resizeMethod='resize'
           className='w-32 h-32 rounded-3xl'
         />
-        <Text className='text-lg font-bold'>Upload Image</Text>
+        <Text
+          className={`text-lg font-bold ${
+            darkMode ? "text-white" : "text-black"
+          }`}>
+          Upload Image
+        </Text>
       </View>
       <View className='w-full py-5 flex flex-col gap-y-2'>
         {userInfo.map((item, index) => {
@@ -74,16 +79,25 @@ const Profile = () => {
             <View
               className='flex flex-row justify-between items-center'
               key={index}>
-              <Text className='text-base'>{item.name}</Text>
+              <Text
+                className={`text-base ${
+                  darkMode ? "text-white font-semibold" : "text-black"
+                }`}>
+                {item.name}
+              </Text>
               {item.name !== "Gender" ? (
                 <TextInput
                   placeholder={`Enter your ${item.name}`}
-                  className='w-2/3 h-12 border-b bg-transparent'
-                  // gender
+                  placeholderTextColor={
+                    darkMode ? "#F1F1F1" : "#0A0A0A"
+                  }
+                  className={`w-2/3 h-12 border-b bg-transparent`}
                 />
               ) : (
                 <ToggleButton.Row
-                  onValueChange={(gender) => dispatch(setGender(gender))}
+                  onValueChange={(gender) =>
+                    dispatch(setGender(gender))
+                  }
                   className='w-2/3 flex flex-row justify-between'>
                   <ToggleButton
                     icon={() => {
@@ -118,7 +132,9 @@ const Profile = () => {
                     rippleColor='#000000'
                     className={`${
                       gender === "male" ? "bg-black" : "bg-white"
-                    } w-24 rounded-xl border`}
+                    } w-24 rounded-xl ${
+                      darkMode ? "border-0" : "border"
+                    } `}
                     onPress={() => {
                       setUsername("male");
                     }}
@@ -127,7 +143,7 @@ const Profile = () => {
                   <ToggleButton
                     icon={() => {
                       return (
-                        <View className='flex flex-row justify-center items-center gap-x-2 p-2'>
+                        <View className='flex flex-row justify-center items-center gap-x-2 p-2 '>
                           <View
                             className={`bg-white ${
                               gender === "female" ? "w-5 h-5" : ""
@@ -157,7 +173,9 @@ const Profile = () => {
                     rippleColor='#000000'
                     className={`${
                       gender === "female" ? "bg-black" : "bg-white"
-                    } w-24 rounded-xl border `}
+                    } w-24 rounded-xl ${
+                      darkMode ? "border-0 " : "border"
+                    } `}
                     onPress={() => {
                       setUsername("female");
                     }}
@@ -169,7 +187,12 @@ const Profile = () => {
         })}
       </View>
       <View className='w-full flex flex-col gap-y-5 py-5'>
-        <Text className='font-bold text-base'>Settings</Text>
+        <Text
+          className={`font-bold text-lg ${
+            darkMode ? "text-white" : "text-black"
+          }`}>
+          Settings
+        </Text>
         <View className='w-full rounded-2xl border border-slate-300 h-max p-5 flex flex-col gap-y-2'>
           {userSettings.map((item, index) => {
             return (
@@ -180,18 +203,33 @@ const Profile = () => {
                   <View className='bg-slate-400 w-10 h-10 rounded-lg'>
                     <Image />
                   </View>
-                  <Text>{item.name}</Text>
+                  <Text
+                    className={`text-base ${
+                      darkMode ? "text-white" : "text-black"
+                    }`}>
+                    {item.name}
+                  </Text>
                 </View>
                 {item.name !== "Dark Mode" ? (
                   <View>
-                    <Text>English</Text>
+                    <Text
+                      className={`text-bas ${
+                        darkMode ? "text-white" : "text-black"
+                      }`}>
+                      English
+                    </Text>
                   </View>
                 ) : (
                   <View className='flex flex-row items-center'>
-                    <Text>{darkMode ? "On" : "Off"}</Text>
+                    <Text
+                      className={`${
+                        darkMode ? "text-white" : "text-black"
+                      }`}>
+                      {darkMode ? "On" : "Off"}
+                    </Text>
                     <Switch
                       value={darkMode}
-                      onValueChange={()=>handleToggleDarkMode()}
+                      onValueChange={() => handleToggleDarkMode()}
                     />
                   </View>
                 )}
