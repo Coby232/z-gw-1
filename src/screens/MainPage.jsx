@@ -28,18 +28,16 @@ import {
 } from "@gorhom/bottom-sheet";
 import { useSelector, useDispatch } from "react-redux";
 
-                
-
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const ScreenWidth = Dimensions.get("screen").width;
 const ScreenHeight = Dimensions.get("screen").height;
 
-
 export default function MainPage() {
   const [isDrawerOpened, setIsDrawerOpen] = useState(false);
   const darkMode = useSelector((state) => state.profile.darkMode);
+  const isTabHidden = useSelector((state) => state.addToCart.clicked);
   const handleOpenedDrawer = (childData) => {
     setIsDrawerOpen(childData);
   };
@@ -86,9 +84,11 @@ export default function MainPage() {
                 ? "rgb(55, 65, 81)"
                 : "#ffffff",
               height: 71,
+              display: isTabHidden === true ? "flex" : "none",
+              //prevent BTab from showing
             },
           })}
-          initialParams={handleOpenedDrawer}
+          // initialParams={handleOpenedDrawer}
         />
         <Tab.Screen
           name='Checkout'

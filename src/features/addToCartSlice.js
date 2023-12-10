@@ -1,22 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: 0,
+  clicked:false,
 };
 
 export const addToCartSlice = createSlice({
   name: "addToCart",
   initialState: initialState,
   reducers: {
-    deposit: (state, action) => {
-      state.value += action.payload;
-    },
-    withdraw: (state, action) => {
-      state.value -= action.payload;
+    toggleTab: (state) => {
+      state.clicked = !state.clicked;
     },
   },
 });
 
-export const { deposit, withdraw } = addToCartSlice.actions;
+export const {toggleTab} = addToCartSlice.actions;
 
 export default addToCartSlice.reducer;

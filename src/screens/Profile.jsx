@@ -39,7 +39,6 @@ const userSettings = [
 const Profile = () => {
   const navigation = useNavigation();
   const [username, setUsername] = useState("");
-  // const [gender, setgender] = useState("male");
   const gender = useSelector((state)=>state.profile.gender);
   const darkMode = useSelector((state) => state.profile.darkMode);
   const dispatch = useDispatch();

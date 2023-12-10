@@ -24,7 +24,7 @@ const AddToCart = ({route}) => {
   // Create a ref
   const bottomSheetRef = useRef < BottomSheet > null;
   // Variables
-  const snapPoints = useMemo(() => ["10%", "50%"], []);
+  const snapPoints = useMemo(() => ["20%", "55%"], []);
 
   // Callbacks
   const handleSheetChanges = useCallback((index) => {
@@ -138,7 +138,6 @@ const AddToCart = ({route}) => {
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
         enableOverDrag={true}
-        backgroundStyle='red'
         handleIndicatorStyle={{ display: "none" }}>
         <BottomSheetView>
           <View className='px-5 '>
